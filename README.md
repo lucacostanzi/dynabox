@@ -15,7 +15,7 @@ Each option is internally stored as an object which can make use of the followin
 *   visible: (Boolean)Set to 0 to not render the `<option>`. (the option is kept in cache but not created as an html element).
 *   selected: (Boolean)Set to 1 to render this `<option>` as selected.
 
-#####Example of an option object
+##### Example of an option object
 
         {
             value: "value1",
@@ -31,12 +31,12 @@ Which will be rendered as:
 
 	<option value="value1" class="selectClass" id="selectId" selected="selected">html1</option>
 
-##Initialize
+## Initialize
 
-###Pre-populated dropdown
+### Pre-populated dropdown
 Binding the plug-in to a dropdown containing a list of options will authomatically cache them and generate the list of option objects for future use.
 
-####Html
+#### Html
 
     <select id="theSelect" name="theSelect">
         <option value="value1">html1</option>
@@ -44,20 +44,20 @@ Binding the plug-in to a dropdown containing a list of options will authomatical
         <option value="value3">html3</option>
     </select>
 
-####Javascript
+#### Javascript
 
     $("#theSelect").dynaBox();
     
     
-###Empty dropdown
+### Empty dropdown
 It's also possible to initialize the plug-in by directly passing the list of options.
 
-####Html
+#### Html
 
     <select id="theSelect" name="theSelect"></select>
 
 
-####Javascript
+#### Javascript
 By passing an array of values, the plugin will automatically generate a list of options with those values set both as value and label.
 
     $("#theSelect").dynaBox(["html1","html2","html3"]);
@@ -84,14 +84,14 @@ To set more fields on each option an array of objects can be passed instead.
     $("#theSelect").dynaBox(options);
 
 
-##Options
+## Options
 
-###add
+### add
 Insert one or more new options to the cache. The dropdown gets re-rendered immediately with the new options unless the render parameter is set to false (true by default).
 
 	$("#theSelect").dynaBox("add", options, [ render ]);
 	
-####Code examples:
+#### Code examples:
 Add 2 new options and set some properties:
 
 	$("#theSelect").dynaBox("add", [
@@ -99,15 +99,15 @@ Add 2 new options and set some properties:
 			{value: "12", label: "New option 2", enabled: 0}
 		]);
 
-###linkSelects
+### linkSelects
 Joins the original dropdown to a second one. Allows options to be moved from one dropdown to the other one.
 
 	$("#theSelect").dynaBox("linkSelects", dropdown , button1 , button2 );
 	
-####Code examples:
+#### Code examples:
 Link the original "#theSelect" to a second element "#theSelect1". Enable button "#btnLinkR" to move the selected options from the first to the second dropdown when clicked. "#btnLinkL" is enabled to move them back.
 
-#####HTML
+##### HTML
 	<div id="div1">
 	    <select id="theSelect" multiple="multiple"></select>
 	</div>
@@ -118,7 +118,7 @@ Link the original "#theSelect" to a second element "#theSelect1". Enable button 
 	<div id="div3">
 	    <select id="theSelect1" multiple="multiple"></select>
 	</div>
-#####Javascript
+##### Javascript
 	$("#theSelect").dynaBox("linkSelects", "#theSelect1", "#btnLinkR", "#btnLinkL");
 	
 	
@@ -133,25 +133,25 @@ Move it back to the original one:
 	$("#theSelect").dynaBox("updateOptions",{"label":"html3"},{"link":""});
 
 
-###orderBy
+### orderBy
 Order the options by one of its properties. The dropdown gets re-rendered immediately with the desired order unless render is set to false (true by default).
 
 Note: the options will keep to be sorted by the given option even after new renderings (ie: even after adding new values).
 
 	$("#theSelect").dynaBox("orderBy", property , [ render ] );
 
-####Code examples:
+#### Code examples:
 Order the options by label:
 
 	$("#theSelect").dynaBox("orderBy","label");
 
 
-###updateOptions
+### updateOptions
 Update a property of one or more options. The dropdown gets re-rendered immediately with the given properties unless render is set to false (true by default).
 
 	$("#theSelect").dynaBox("updateOptions", selector ,  properties , [ render ]);
 
-####Code examples:
+#### Code examples:
 Set the option with label "html3" as visible:
 
 	$("#theSelect").dynaBox("updateOptions",{"label":"html3"},{"visible":1});
@@ -168,17 +168,17 @@ Enable every option but don't render the changes immediately:
 
 	$("#theSelect").dynaBox("updateOptions","all",{"disabled":0} , false );
 
-###remove
+### remove
 Remove one or more options from the cache. The html dropdown gets re-rendered immediately without the desired options unless the "render" property is set to false (true by default).
 
 	$("#theSelect").dynaBox("remove", selector, [ render ]);
 	
-####Code examples:
+#### Code examples:
 Remove the options with class "removeMe".
 
 	$("#theSelect").dynaBox("remove",{"classHtml":"removeMe"});
 	
-###render
+### render
 Renders the cache.
 
 	$("theSelect").dynaBox("render");
