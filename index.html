@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<!--
+ FILE NAME:    newhtml.html
+ AUTHOR:       Luca Costanzi (luca.costanzi@gmail.com)
+ --------------------------
+ DESCRIPTION:
+ 
+ VERSIONS:
+ 1.0	Original
+-->
+<html >
+<head >
+    <title >Dynabox</title >
+    <meta charset="utf-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <link type="image/x-icon" href="favicon.ico" rel="icon" >
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous" ></script >
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" ></script >
+    <script type="text/javascript" src="dynaBox.js" ></script >
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <!-- Latest compiled and minified JavaScript -->
+    <!--<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>-->
+    <style >
+        #content {
+        }
+
+        #sel1, #theSelect1, #theSelect {
+            width: 100%;
+        }
+
+        #div1, #div3 {
+            float: left;
+            width: 340px;
+        }
+
+        #div2 {
+            float: left;
+            width: 50px;
+        }
+
+        .input-submit {
+            margin-top: 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .subsection {
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px 4px 0 0;
+            box-shadow: none;
+            margin-left: 0;
+            margin-right: 0;
+            padding: 5px 15px 15px;
+            position: relative;
+        }
+
+        h4 {
+            /*color: #473368;*/
+        }
+
+        h3 {
+            border-bottom: 1px solid #eeeeee;
+            margin: 20px 0 20px;
+            padding-bottom: 9px;
+            color: #FA8B60;
+        }
+
+        h1, h2 {
+            color: #EF6D3B;
+        }
+
+        .jumbotron {
+            color: #EF6D3B;
+            background-color: #473368;
+        }
+
+        .jsub {
+            color: white;
+            padding-left: 14px;
+        }
+
+        #titicon {
+            vertical-align: -5px;
+
+        }
+
+        .lat li a {
+            color: #EF6D3B;
+
+        }
+
+        .affix {
+            position: fixed;
+            top: 0 !important;
+        }
+
+        .nopad {
+            padding-left: 0;
+        }
+
+        .intitle {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .men1 {
+            font-weight: bold;
+        }
+
+        .men2 {
+            padding-left: 10px;
+        }
+
+        .men3 {
+            padding-left: 20px;
+            font-size: .8em;
+        }
+
+        #dwnlink {
+            color: #EF6D3B;
+            border: 2px solid #EF6D3B;
+            font-weight: bolder;
+        }
+
+        #dwnlink span {
+            vertical-align: -1px;
+        }
+
+        #dwnlink:hover {
+            color: #fff;
+            border-color: #fff;
+            background: #EF6D3B;
+        }
+
+        .gettxt {
+            font-weight: bolder;
+        }
+
+        .left-float {
+            float: left;
+            margin-right: 20px;
+        }
+    </style >
+</head >
+<body >
+<div class="jumbotron" >
+    <div id="content" class="container " >
+        <h1 ><span id="titicon" class="glyphicon glyphicon-chevron-right" aria-hidden="true" ></span >DynaBOX</h1 >
+        <p class="jsub" >a javascript widget for dynamically editable dropdown lists</p >
+    </div >
+</div >
+<div id="content" class="container " >
+    <div id="readme" class="blob instapaper_body col-md-9" >
+        <div class="section" >
+            <h1 class="intitle" ><a id="user-content-getting-started" class="anchor" href="#example"
+                                    aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Getting started
+            </h1 >
+            <p class="col-md-12 gettxt nopad " ><a id="dwnlink" class="btn btn-default left-float"
+                                                   href="https://github.com/BauerFike/dynabox/archive/master.zip" >Get
+                dynaBox: <span class="glyphicon glyphicon-download" aria-hidden="true" ></span > DOWNLOAD</a ><a
+                    id="dwnlink" class="btn btn-default left-float" target="_blank"
+                    href="https://github.com/BauerFike/dynabox" >Check dynaBox on Github</a ></p >
+            <br />
+            <br />
+            <br />
+            <p >This plugin binds a dropdown with a cached version of it which can be used to dynamically re-render its
+                options.
+                Each option is internally stored as an object which can make use of the following properties:</p >
+
+            <ul >
+                <li > label: (String)The text which goes between <code >&lt;option&gt;</code > tags.</li >
+                <li > value: (String)The value of the <code >&lt;option&gt;</code >.</li >
+                <li > group: (String)The <code >&lt;optgroup&gt;</code > where this option should be added.</li >
+                <li > classHtml: (String)The html class value.</li >
+                <li > idHtml: (String)The html id value.</li >
+                <li > disabled: (Boolean)1 to disable the <code >&lt;option&gt;</code >.</li >
+                <li > visible: (Boolean)Set to 0 to not render the <code >&lt;option&gt;</code >. (the option is kept in
+                    cache but not created as an html element).
+                </li >
+                <li > selected: (Boolean)Set to 1 to render this <code >&lt;option&gt;</code > as selected.</li >
+            </ul >
+
+            <h5 ><a id="user-content-example-of-an-option-object" class="anchor" href="#example-of-an-option-object"
+                    aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Example of a cached option
+                object:</h5 >
+
+            <pre ><code >{
+    value: "value1",
+    label: "html1",
+    group: "optionGroup",
+    classHtml: "selectClass",
+    idHtml: "selectId",
+    disabled: 0,
+    visible: 1,
+    selected: 1
+}
+</code ></pre >
+
+            <p >Which will be rendered as:</p >
+
+            <pre ><code >&lt;option value="value1" class="selectClass" id="selectId" selected="selected"&gt;html1&lt;/option&gt;
+</code ></pre >
+
+
+        </div >
+        <div class="section" >
+            <h1 class="intitle" ><a id="user-content-example" class="anchor" href="#example" aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >Examples</h1 >
+            <h2 class="" >
+                <a id="user-content-initialization-and-updates" class="anchor" href="#initialization-and-updates"
+                   aria-hidden="true" >
+                    <span class="octicon octicon-link" ></span >
+                </a >Initialization and updates
+            </h2 >
+            <div class="subsection container-fluid" >
+                <div class="" >
+                    <h3 class="" >Initialization</h3 >
+                    <p class="col-md-12 nopad expla" >Initialize the widget and assign some options to the dropdown. Set
+                        the first option as disabled, the second as selected and the third as hidden. </p >
+                    <div class="col-md-9 nopad" >
+                        <pre ><code >&lt;select id=&quot;sel1&quot; name=&quot;sel1&quot; size=&quot;12&quot; multiple&gt;&lt;/select&gt;<br />&lt;script&gt;<br />  options = [<br />    {value: &quot;0&quot;,label: &quot;php&quot;,disabled: 1},<br />    {value: &quot;1&quot;,label: &quot;javascript&quot;,selected: 1},<br />    {value: &quot;2&quot;,label: &quot;SQL&quot;,visible: 0},<br />    {value: &quot;3&quot;,label: &quot;C#&quot;,visible: 1},<br />    {value: &quot;4&quot;,label: &quot;HTML&quot;,visible: 1},<br />    {value: &quot;5&quot;,label: &quot;XML&quot;,visible: 1}<br />  ];<br />  $(&quot;#sel1&quot;).dynaBox(options);<br />&lt;/script&gt;</code ></pre >
+                    </div >
+                    <div class="col-md-3" >
+                        <select class="form-control" id="sel1" name="sel1" size="12" multiple ></select >
+                    </div >
+                    <h3 class="col-md-12 nopad" >Hide the selected options</h3 >
+                    <p class="col-md-12 nopad expla" >Use the
+                        <mark >"updateOptions"</mark >
+                        function to hide some options. The code tells to get the options which are selected (
+                        <mark >{"selected" : 1}</mark >
+                        ) and to not render them anymore (
+                        <mark >{"visible" : 0}</mark >
+                        ).
+                    </p >
+                    <div class="col-md-9 nopad" >
+                        <pre ><code >&lt;button onclick=&quot;hideSel();&quot; &gt;Hide Selected&lt;/button&gt;<br />&lt;script&gt;<br />function hideSel() {<br />    $(&quot;#sel1&quot;).dynaBox(&quot;updateOptions&quot;, {&quot;selected&quot;: 1}, {&quot;visible&quot;: 0});<br />}<br />&lt;/script&gt;</code ></pre >
+                    </div >
+                    <div class="col-md-3" >
+                        <button class="btn btn-default" onclick="hideSel();" >Hide Selected</button >
+                    </div >
+                    <h3 class="col-md-12 nopad" >Unhide all the options</h3 >
+                    <p class="col-md-12 nopad expla" >Use the
+                        <mark >"updateOptions"</mark >
+                        function to set every option (
+                        <mark >"all"</mark >
+                        selector) as visible (
+                        <mark >{"visible" : 1}</mark >
+                        ).
+                    </p >
+                    <div class="col-md-9 nopad" >
+                        <pre ><code >&lt;button onclick=&quot;showAll();&quot;&gt;Show all&lt;/button&gt;<br />&lt;script&gt;<br />function showAll() {<br />    $(&quot;#sel1&quot;).dynaBox(&quot;updateOptions&quot;, &quot;all&quot;, {&quot;visible&quot;: 1});<br />}<br />&lt;/script&gt;</code ></pre >
+                    </div >
+                    <div class="col-md-3" >
+                        <button class="btn btn-default" onclick="showAll();" >Show all</button >
+                    </div >
+                    <h3 class="col-md-12 nopad" >Disable the options with values 3, 4 and 5</h3 >
+                    <p class="col-md-12 nopad expla" >Use the
+                        <mark >"updateOptions"</mark >
+                        function to select the options with with values 3, 4 and 5 and disable them with
+                        <mark >{"disabled": 1}</mark >
+                        .
+                    </p >
+                    <div class="col-md-9 nopad" >
+                        <pre ><code >&lt;button class=&quot;btn btn-default&quot; onclick=&quot;disableEl();&quot;&gt;Disable Options&lt;/button&gt;<br />&lt;script&gt;<br />function disableEl() {<br />    $(&quot;#sel1&quot;).dynaBox(&quot;updateOptions&quot;, {&quot;value&quot;: [3,4,5]}, {&quot;disabled&quot;: 1});<br />}<br />&lt;/script&gt;</code ></pre >
+                    </div >
+                    <div class="col-md-3" >
+                        <button class="btn btn-default" onclick="disableEl();" >Disable Options</button >
+                    </div >
+                    <h3 class="col-md-12 nopad" >Enable the options with labels "C#", "HTML" and "XML"</h3 >
+                    <p class="col-md-12 nopad expla" >Use the
+                        <mark >"updateOptions"</mark >
+                        function to select the options with with labels "C#", "HTML" and "XML" and enable them with
+                        <mark >{"disabled": 0}</mark >
+                        .
+                    </p >
+                    <div class="col-md-9 nopad" >
+                        <pre ><code >&lt;button class=&quot;btn btn-default&quot; onclick=&quot;enableEl();&quot;&gt;Enable Options&lt;/button&gt;<br />&lt;script&gt;<br />function enableEl() {<br />    $(&quot;#sel1&quot;).dynaBox(&quot;updateOptions&quot;, {&quot;label&quot;: [&quot;C#&quot;,&quot;HTML&quot;,&quot;XML&quot;]}, {&quot;disabled&quot;: 0});<br />}<br />&lt;/script&gt;</code ></pre >
+                    </div >
+                    <div class="col-md-3" >
+                        <button class="btn btn-default" onclick="enableEl();" >Enable Options</button >
+                    </div >
+                    <script >
+
+                      options = [
+                        { value: "0", label: "php", disabled: 1 },
+                        { value: "1", label: "javascript", selected: 1 },
+                        { value: "2", label: "SQL", visible: 0 },
+                        { value: "3", label: "C#", visible: 1 },
+                        { value: "4", label: "HTML", visible: 1 },
+                        { value: "5", label: "XML", visible: 1 }
+                      ];
+                      var db = $("#sel1").dynaBox(options);
+                      $("#sel1").dynaBox("showOptions");
+                      function hideSel() {
+                        $("#sel1").dynaBox("updateOptions", { "selected": 1 }, { "visible": 0 });
+                      }
+                      function showAll() {
+                        $("#sel1").dynaBox("updateOptions", "all", { "visible": 1 });
+                      }
+                      function disableEl() {
+                        $("#sel1").dynaBox("updateOptions", { "value": [3, 4, 5] }, { "disabled": 1 });
+                      }
+                      function enableEl() {
+                        $("#sel1").dynaBox("updateOptions", { "label": ["C#", "HTML", "XML"] }, { "disabled": 0 });
+                      }
+                    </script >
+                </div >
+            </div >
+            <h2 class="" >
+                <a id="user-content-linking-dropdowns" class="anchor" href="#linking-dropdowns" aria-hidden="true" >
+                    <span class="octicon octicon-link" ></span >
+                </a >Linking dropdowns
+            </h2 >
+            <div class="subsection container-fluid" >
+                <div class="col-md-12 nopad" >
+                    <h3 class="col-md-12 nopad" >Initialize the widget and link the dropdowns and the 2 buttons</h3 >
+                    <div id="" class="col-md-5" >
+                        <select class="form-control exsel" id="theSelect" multiple="multiple" size="12" ></select >
+                    </div >
+                    <div id="" class="col-md-2" >
+                        <input style="float:left; width:49%;" id="btnLinkL" type="button" value="<-" >
+                        <input style="float:left; width:49%;" id="btnLinkR" type="button" value="->" >
+                    </div >
+                    <div id="" class="col-md-5" >
+                        <select class="form-control exsel" id="theSelect1" multiple="multiple" size="12" ></select >
+                    </div >
+                    <script >
+                      var db1 = $("#theSelect").dynaBox(options);
+                      $("#theSelect").dynaBox("linkSelects", "#theSelect1", "#btnLinkR", "#btnLinkL");
+                    </script >
+                    <br style="clear:both" />
+                    <br >
+                </div >
+                <div class="col-md-12 nopad" >
+                    <pre ><code >&lt;select id=&quot;theSelect&quot; multiple=&quot;multiple&quot; size=&quot;12&quot;&gt;&lt;/select&gt;<br />&lt;input id=&quot;btnLinkL&quot; type=&quot;button&quot; value=&quot;&lt;-&quot;&gt;<br />&lt;input id=&quot;btnLinkR&quot; type=&quot;button&quot; value=&quot;-&gt;&quot;&gt;<br />&lt;select id=&quot;theSelect1&quot; multiple=&quot;multiple&quot; size=&quot;12&quot;&gt;&lt;/select&gt;<br />&lt;script&gt;<br />var db1 = $(&quot;#theSelect&quot;).dynaBox(options);<br />$(&quot;#theSelect&quot;).dynaBox(&quot;linkSelects&quot;, &quot;#theSelect1&quot;, &quot;#btnLinkR&quot;, &quot;#btnLinkL&quot;);<br />&lt;/script&gt;</code ></pre >
+                </div >
+            </div >
+        </div >
+        <div class="section" >
+            <h1 class="intitle" ><a id="user-content-documentation" class="anchor" href="#documentation"
+                                    aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Documentation
+            </h1 >
+            <h2 ><a id="user-content-initialize" class="anchor" href="#initialize" aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >Initialize</h2 >
+
+            <div class="subsection" ><h3 class="" ><a id="user-content-pre-populated-dropdown" class="anchor"
+                                                      href="#pre-populated-dropdown" aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >Pre-populated dropdown</h3 >
+
+                <p >Binding the plug-in to a dropdown containing a list of options will authomatically cache them and
+                    generate the list of option objects for future use.</p >
+
+                <div id="example1" class="" >
+
+                    <h4 ><a id="user-content-html" class="anchor" href="#html" aria-hidden="true" ><span
+                            class="octicon octicon-link" ></span ></a >Html</h4 >
+
+                    <pre ><code >&lt;select id="sel" name="sel"&gt;
+    &lt;option value="php"&gt;php&lt;/option&gt;
+    &lt;option value="javascript"&gt;javascript&lt;/option&gt;
+    &lt;option value="html"&gt;html&lt;/option&gt;
+&lt;/select&gt;
+</code ></pre >
+
+                    <h4 ><a id="user-content-javascript" class="anchor" href="#javascript" aria-hidden="true" ><span
+                            class="octicon octicon-link" ></span ></a >Javascript</h4 >
+
+                    <pre ><code >$("#theSelect").dynaBox();
+</code ></pre >
+                </div >
+            </div >
+
+            <div class="subsection" ><h3 class="" ><a id="user-content-empty-dropdown" class="anchor"
+                                                      href="#empty-dropdown" aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >Empty dropdown</h3 >
+
+                <p >It's also possible to initialize the plug-in by directly passing the list of options.</p >
+
+                <div id="example2" class="" >
+
+                    <h4 ><a id="user-content-html-1" class="anchor" href="#html-1" aria-hidden="true" ><span
+                            class="octicon octicon-link" ></span ></a >Html</h4 >
+
+                    <pre ><code >&lt;select id="theSelect" name="theSelect"&gt;&lt;/select&gt;
+</code ></pre >
+
+                    <h4 ><a id="user-content-javascript-1" class="anchor" href="#javascript-1" aria-hidden="true" ><span
+                            class="octicon octicon-link" ></span ></a >Javascript</h4 >
+
+                    <p >To set more fields on each option an array of objects can be passed.</p >
+
+                    <pre ><code >options = [
+    {
+        value: "value1",
+        label: "html1",
+        disabled: 1
+    },
+    {
+        value: "value2",
+        label: "html2",
+        selected: 1
+    },
+    {
+        value: "value3",
+        label: "html3",
+        visible: 0
+    }
+];
+$("#theSelect").dynaBox(options);
+</code ></pre >
+
+                    <p >By passing an array of values, the plugin will automatically generate a list of options with
+                        those values set both as value and label.</p >
+
+                    <pre ><code >$("#theSelect").dynaBox(["html1","html2","html3"]);
+</code ></pre >
+                </div >
+            </div >
+        </div >
+        <div class="section" >
+            <h2 ><a id="user-content-methods" class="anchor" href="#methods" aria-hidden="true" ><span
+                    class="octicon octicon-link " ></span ></a >Methods</h2 >
+
+            <div class="subsection" ><h3 class="" ><a id="user-content-add" class="anchor" href="#add"
+                                                      aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >add</h3 >
+
+                <p >Insert one or more new options to the cache. The dropdown gets re-rendered immediately with the new
+                    options unless the render parameter is set to false (true by default).</p >
+
+                <pre ><code >$("#theSelect").dynaBox("add", options, [ render ]);
+</code ></pre >
+
+                <h4 ><a id="user-content-code-examples" class="anchor" href="#code-examples" aria-hidden="true" ><span
+                        class="octicon octicon-link" ></span ></a >Code examples:</h4 >
+
+                <p >Add 2 new options and set some properties:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("add", [
+    {value: "11", label: "New option 1", visible: 1},
+    {value: "12", label: "New option 2", enabled: 0}
+]);
+</code ></pre >
+            </div >
+            <div class="subsection" ><h3 class="" ><a id="user-content-linkselects" class="anchor" href="#linkselects"
+                                                      aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >linkSelects</h3 >
+
+                <p >Joins the original dropdown to a second one. Allows options to be moved from one dropdown to the
+                    other one.</p >
+
+                <pre ><code >$("#theSelect").dynaBox("linkSelects", dropdown , button1 , button2 );
+</code ></pre >
+
+                <h4 ><a id="user-content-code-examples-1" class="anchor" href="#code-examples-1"
+                        aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Code examples:</h4 >
+
+                <p >Link the original "#theSelect" to a second element "#theSelect1". Enable button "#btnLinkR" to move
+                    the selected options from the first to the second dropdown when clicked. "#btnLinkL" is enabled to
+                    move them back.</p >
+
+                <h5 ><a id="user-content-html-2" class="anchor" href="#html-2" aria-hidden="true" ><span
+                        class="octicon octicon-link" ></span ></a >HTML</h5 >
+
+                <pre ><code >&lt;div id="div1"&gt;
+    &lt;select id="theSelect" multiple="multiple"&gt;&lt;/select&gt;
+&lt;/div&gt;
+&lt;div id="div2"&gt;
+    &lt;input id="btnLinkR" type="button" value="-&gt;"&gt;
+    &lt;input id="btnLinkL" type="button" value="&lt;-"&gt;
+&lt;/div&gt;
+&lt;div id="div3"&gt;
+    &lt;select id="theSelect1" multiple="multiple"&gt;&lt;/select&gt;
+&lt;/div&gt;
+</code ></pre >
+
+                <h5 ><a id="user-content-javascript-2" class="anchor" href="#javascript-2" aria-hidden="true" ><span
+                        class="octicon octicon-link" ></span ></a >Javascript</h5 >
+
+                <pre ><code >$("#theSelect").dynaBox("linkSelects", "#theSelect1", "#btnLinkR", "#btnLinkL");
+</code ></pre >
+
+                <p >An option can be moved from a dropdown to the other by changing its "link" property. If "link" is
+                    equal to an empty string the option will be rendered on the first dropdown, while if it's equal to
+                    "linked", it will be showed on the second.</p >
+
+                <p >Move the option with label "html3" to the second dropdown:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions",{"label":"html3"},{"link":"linked"});
+</code ></pre >
+
+                <p >Move it back to the original one:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions",{"label":"html3"},{"link":""});
+</code ></pre >
+            </div >
+            <div class="subsection" ><h3 class="" ><a id="user-content-orderby" class="anchor" href="#orderby"
+                                                      aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >orderBy</h3 >
+
+                <p >Order the options by one of its properties. The dropdown gets re-rendered immediately with the
+                    desired order unless render is set to false (true by default).</p >
+
+                <p >Note: the options will keep to be sorted by the given option even after new renderings (ie: even
+                    after adding new values).</p >
+
+                <pre ><code >$("#theSelect").dynaBox("orderBy", property , [ render ] );
+</code ></pre >
+
+                <h4 ><a id="user-content-code-examples-2" class="anchor" href="#code-examples-2"
+                        aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Code examples:</h4 >
+
+                <p >Order the options by label:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("orderBy","label");
+</code ></pre >
+            </div >
+            <div class="subsection" ><h3 class="" ><a id="user-content-updateoptions" class="anchor"
+                                                      href="#updateoptions" aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >updateOptions</h3 >
+
+                <p >Update a property of one or more options. The dropdown gets re-rendered immediately with the given
+                    properties unless render is set to false (true by default).</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions", selector ,  properties , [ render ]);
+</code ></pre >
+                <p >The following properties can be updated or used to select the desired options from the
+                    dropdown:</p >
+                <ul >
+                    <li > label: (String)The text which goes between <code >&lt;option&gt;</code > tags.</li >
+                    <li > value: (String)The value of the <code >&lt;option&gt;</code >.</li >
+                    <li > classHtml: (String)The html class value.</li >
+                    <li > idHtml: (String)The html id value.</li >
+                    <li > disabled: (Boolean)1 to disable the <code >&lt;option&gt;</code >.</li >
+                    <li > visible: (Boolean)Set to 0 to not render the <code >&lt;option&gt;</code >. (the option is
+                        kept in cache but not created as an html element).
+                    </li >
+                    <li > selected: (Boolean)Set to 1 to render this <code >&lt;option&gt;</code > as selected.</li >
+                    <li > index: (Integer) (read-only) A unique index which can be used to identify the select.</li >
+                </ul >
+
+                <h4 ><a id="user-content-code-examples-3" class="anchor" href="#code-examples-3"
+                        aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Code examples:</h4 >
+
+                <p >Set the option with label "html3" as visible:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions",{"label":"html3"},{"visible":1});
+</code ></pre >
+
+                <p >More values for the property selector can be passed with an array.</p >
+
+                <p >Set the options with values "value2" and "value3" as disabled:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions",{"value":["value2","value3"]},{"disabled":1});
+</code ></pre >
+
+                <p >Use the selector "all" to edit every option.</p >
+
+                <p >Enable every option but don't render the changes immediately:</p >
+
+                <pre ><code >$("#theSelect").dynaBox("updateOptions","all",{"disabled":0} , false );
+</code ></pre >
+            </div >
+            <div class="subsection" ><h3 class="" ><a id="user-content-remove" class="anchor" href="#remove"
+                                                      aria-hidden="true" ><span
+                    class="octicon octicon-link" ></span ></a >remove</h3 >
+
+                <p >Remove one or more options from the cache. The html dropdown gets re-rendered immediately without
+                    the desired options unless the "render" property is set to false (true by default).</p >
+
+                <pre ><code >$("#theSelect").dynaBox("remove", selector, [ render ]);
+</code ></pre >
+
+                <h4 ><a id="user-content-code-examples-4" class="anchor" href="#code-examples-4"
+                        aria-hidden="true" ><span class="octicon octicon-link" ></span ></a >Code examples:</h4 >
+
+                <p >Remove the options with class "removeMe".</p >
+
+                <pre ><code >$("#theSelect").dynaBox("remove",{"classHtml":"removeMe"});
+</code ></pre >
+            </div >
+
+        </div >
+    </div >
+    <div id="menu" class="col-md-3" >
+        <nav data-spy="affix" data-offset-top="260" >
+            <ul class="nav nav-pills nav-stacked lat" >
+                <li class="men1" >
+                    <a href="#user-content-getting-started" >Getting started</a >
+                </li >
+                <li class="men2" >
+                    <a href="https://github.com/BauerFike/dynabox/archive/master.zip" >Download</a >
+                </li >
+                <li class="men1" >
+                    <a href="#user-content-example" >Examples</a >
+                </li >
+                <li class="men2" >
+                    <a href="#user-content-initialization-and-updates" >Initialization and updates</a >
+                </li >
+                <li class="men2" >
+                    <a href="#user-content-linking-dropdowns" >Linking dropdowns </a >
+                </li >
+                <li class="men1" >
+                    <a href="#user-content-documentation" >Documentation</a >
+                </li >
+                <li class="men2" >
+                    <a href="#user-content-initialize" >Initialization</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-pre-populated-dropdown" >Pre-populated dropdown</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-empty-dropdown" >Empty dropdown</a >
+                </li >
+                <li class="men2" >
+                    <a href="#user-content-methods" >Methods</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-add" >add</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-linkselects" >linkSelects</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-orderby" >orderBy</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-updateoptions" >updateOptions</a >
+                </li >
+                <li class="men3" >
+                    <a href="#user-content-remove" >remove</a >
+                </li >
+
+            </ul >
+        </nav >
+    </div >
+</div >
+</div>
+</body >
+</html >
